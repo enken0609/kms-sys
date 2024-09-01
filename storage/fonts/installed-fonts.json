@@ -1,0 +1,14 @@
+{
+    "ipaexg": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/ipaexg_normal_64c0ed6ddbf1e1b3b8384e5216fb2e92",
+        "bold": "ipaexg_bold_64c0ed6ddbf1e1b3b8384e5216fb2e92"
+    },
+    "ipag": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/ipag_normal_b7bb188660a3bb4a95f4b63515416544",
+        "bold": "ipag_bold_dd9c6ab769e39dacc1b63d9408b7aa20"
+    },
+    "noto sans jp": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/noto_sans_jp_normal_b7bb188660a3bb4a95f4b63515416544",
+        "bold": "noto_sans_jp_bold_dd9c6ab769e39dacc1b63d9408b7aa20"
+    }
+}
