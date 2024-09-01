@@ -1,0 +1,87 @@
+.test {
+  color: red;
+}
+
+.navbar-nav.sidebar {
+  background: #fff;
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: red;
+}
+
+.race .table {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #212529;
+    background-color: none;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.race .table th, .race .table td {
+    vertical-align: middle;
+    border-top: none;
+    padding: 1rem;
+}
+
+.race .table thead th {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.race .table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.race .table tbody tr td {
+    border-top: none;
+    background: #fff;
+}
+
+.race .table tbody tr td:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.race .table tbody tr td:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.result th, .result td, .btn-certificate {
+  font-family: Noto Sans JP;
+  font-weight: bold;
+}
+
+.result td {
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .leaderboard .result_box p {
+    font-size: 0.7rem; /* 文字を小さくする */
+  }
+  .leaderboard .result_box_header p {
+    font-size: 0.5rem; /* 文字を小さくする */
+  }
+  .result th, .result td, .btn-certificate {
+    font-size: 0.7rem!important;
+    padding-left: 0.3rem!important;
+    padding-right: 0.3rem!important;
+  }
+}
+
+@media (min-width: 767px) {
+  .result_box_header_item .rank, .result_box_item .rank {
+    min-width:50px;
+  }
+    .result_box_header_item .bib, .result_box_item .bib {
+    min-width:100px;
+  }
+    .result_box_header_item .name, .result_box_item .name {
+    min-width:150px;
+  }
+    .result_box_header_item .time, .result_box_item .time {
+    min-width:150px;
+  }
+}

@@ -1,0 +1,78 @@
+
+.leaderboard .result_box p, .leaderboard .result_box_header p {
+  font-family: 'barlow', sans-serif;
+  font-weight: bold;
+}
+
+.result_box_header p {
+  color: #949E9D;
+  font-size: 0.8rem;
+}
+
+.result_box_collapse .card {
+  border-top: 1px solid #e3e6f0;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+}
+
+.result_box_item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.collapse_border {
+  border-top: 1px solid rgb(0 0 0 / 50%);
+}
+
+.result th, .result td, .btn-certificate {
+  font-family: Noto Sans JP;
+  font-weight: bold;
+}
+
+.result td {
+  background: #fff;
+}
+
+.leaderboard thead, .leaderboard thead th, .leaderboard tbody td {
+  background: none;
+}
+
+.leaderboard thead th, .leaderboard tbody td {
+  font-family: Noto Sans JP;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+   h2 {
+    font-size: 0.9rem!important;
+  }
+  .leaderboard .result_box p {
+    font-size: 0.7rem; /* 文字を小さくする */
+  }
+  .leaderboard .result_box_header p {
+    font-size: 0.5rem; /* 文字を小さくする */
+  }
+  .result th, .result td, .btn-certificate {
+    font-size: 0.7rem!important;
+    padding-left: 0.3rem!important;
+    padding-right: 0.3rem!important;
+  }
+  .leaderboard thead th {
+    font-size: 0.5rem;
+    padding: 6px;
+  }
+  .leaderboard tbody td {
+    font-size: 0.7rem;
+    padding: 6px;
+  }
+.back-btn {
+  font-size: 0.7rem!important;
+}
+}
+
+@media (min-width: 767px) {
+
+}
