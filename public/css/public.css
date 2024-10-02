@@ -71,6 +71,21 @@
 .back-btn {
   font-size: 0.7rem!important;
 }
+
+ .result-list table thead th, .result-list table thead td {
+font-size: 0.5rem!important;
+}
+
+.result-list table thead td {
+  maz-width: 50px;
+}
+
+.result-list .table thead td a {
+  font-size: 0.6rem!important;
+}
+.card.shadow {
+  padding: 0.8rem!important;
+}
 }
 
 @media (min-width: 767px) {

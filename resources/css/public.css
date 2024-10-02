@@ -71,6 +71,11 @@
 .back-btn {
   font-size: 0.7rem!important;
 }
+
+.result-list h2, .result-list h3, .result-list table thead th, .result-list table thead th td {
+font-size: 0.7rem!important;
+}
+
 }
 
 @media (min-width: 767px) {
