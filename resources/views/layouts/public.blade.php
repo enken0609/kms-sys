@@ -34,14 +34,11 @@
 <body id="page-top">
   <div id="app">
     <nav class="navbar navbar-light bg-white shadow">
-      <a class="navbar-brand" href="#">
-        <img src="{{ asset('img/kms_logo.png') }}" width="80" height="47" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="/">
+        <img src="{{ asset('img/kms_logo.png') }}" width="64" height="38" class="d-inline-block align-top" alt="">
       </a>
     </nav>
     <main class="">
-      <h1 class="text-3xl font-bold underline text-red-900">
-        Hello world!
-      </h1>
       @yield('content')
     </main>
   </div>
