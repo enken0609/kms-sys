@@ -72,6 +72,8 @@ class PublicRaceController extends Controller
         $series = $race->series;
         if ($series == 'skyvalley') {
             $image_path = public_path('img/skyvalley_certificate_template.png');
+        } elseif ($series == 'mountainmarathon') {
+            $image_path = public_path('img/mountain_marathon_certificate_template.png');
         } elseif ($series == 'shirane') {
             $image_path = public_path('img/shirane_certificate_template.png');
         }
@@ -79,6 +81,8 @@ class PublicRaceController extends Controller
         $image_data = base64_encode(file_get_contents($image_path));
 
         if ($series == 'skyvalley') {
+            $pdf = PDF::loadView('public.races.certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
+        }elseif ($series == 'mountainmarathon') {
             $pdf = PDF::loadView('public.races.certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
         } elseif ($series == 'shirane') {
             $is_team_race = $result->category->is_team_race;
