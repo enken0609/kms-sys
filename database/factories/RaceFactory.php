@@ -21,7 +21,7 @@ class RaceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => "第3回五頭登山競走",
+            'name' => "テストレース",
             'description' => "テスト",
             'date' => "2024/9/22",
         ];
