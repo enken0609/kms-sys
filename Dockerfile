@@ -1,5 +1,9 @@
 FROM php:8.2-fpm
 
+# Node.jsのインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # 必要なパッケージのインストール
 RUN apt-get update && apt-get install -y \
     git \
@@ -33,6 +37,9 @@ COPY --chown=www:www . /var/www
 
 # ストレージとキャッシュディレクトリに書き込み権限を付与
 RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+# npmパッケージのインストール
+RUN npm install
 
 # 実行ユーザーの変更
 USER www
