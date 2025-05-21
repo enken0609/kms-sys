@@ -10,6 +10,20 @@ class Result extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'category_id',
+        'block_id',
+        'place',
+        'bib',
+        'name',
+        'gender',
+        'time',
+        'age_place',
+        'team_name',
+        'team_place',
+        'team_time',
+    ];
+
     // Resultは1つのCategoryに属する
     public function category()
     {

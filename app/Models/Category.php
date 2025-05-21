@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     // Categoryは1つのRaceに属する
     public function race()
     {
@@ -23,9 +25,13 @@ class Category extends Model
     }
 
     protected $fillable = [
-        'race_id',
         'name',
+        'race_id',
         'is_team_race',
         'display_order',  // 追加したカラム
+    ];
+
+    protected $casts = [
+        'is_team_race' => 'boolean',
     ];
 }
