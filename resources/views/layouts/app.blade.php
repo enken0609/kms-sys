@@ -24,6 +24,8 @@
   <script src="{{ asset('js/app.js') }}" defer></script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @stack('scripts')
 </head>
 
 <body id="page-top">
@@ -59,8 +61,7 @@
           </div>
         </div>
       </div>
-  </div>
-  </main>
+    </main>
   </div>
 </body>
 

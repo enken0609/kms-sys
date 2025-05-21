@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www
     ports:
-      - "5174:5174"
+      - "5173:5173"
     volumes:
       - ./:/var/www
     networks:
