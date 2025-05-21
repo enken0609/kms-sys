@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RaceController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\CertificateTemplateController;
 
 // 管理画面のルート
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -27,6 +28,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // カテゴリー管理
         Route::resource('categories', CategoryController::class);
         Route::post('categories/{category}/import', [CategoryController::class, 'import'])->name('categories.import');
+
+        // 記録証テンプレート管理
+        Route::resource('certificate-templates', CertificateTemplateController::class);
     });
 });
 

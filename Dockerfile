@@ -20,6 +20,8 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # PHP設定のカスタマイズ - メモリ制限を増やす
 RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
+RUN echo "upload_max_filesize = 10M" > /usr/local/etc/php/conf.d/uploads.ini
+RUN echo "post_max_size = 10M" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Composerのインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
