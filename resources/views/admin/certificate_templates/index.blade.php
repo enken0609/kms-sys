@@ -47,7 +47,7 @@
                     @foreach($templates as $template)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <img src="{{ Storage::url($template->image_path) }}" 
+                                <img src="{{ asset('uploads/' . $template->image_path) }}" 
                                      alt="{{ $template->name }}" 
                                      class="h-20 w-auto object-contain">
                             </td>

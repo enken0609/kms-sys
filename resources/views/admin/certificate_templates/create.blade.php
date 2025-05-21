@@ -10,7 +10,7 @@
         
         Alpine.data('templateEditor', () => ({
             previewImage: '',
-            paperSize: 'B5',
+            paperSize: 'A4',
             elements: {
                 bib_number: { x: 100, y: 150, font_size: 24, color: '#000000' },
                 category_name: { x: 200, y: 200, font_size: 20, color: '#000000' },
@@ -258,7 +258,7 @@
             <div class="border rounded-lg p-4">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">レイアウト設定</h3>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-8">
                     <!-- プレビュー領域 -->
                     <div class="overflow-auto p-4 bg-gray-50 rounded-lg" style="max-height: 800px;">
                         <div class="relative border rounded-lg overflow-hidden bg-gray-100 mx-auto" 

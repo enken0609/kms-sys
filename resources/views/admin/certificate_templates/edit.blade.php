@@ -32,7 +32,7 @@
             <!-- 現在のテンプレート画像 -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">現在の画像</label>
-                <img src="{{ Storage::url($certificateTemplate->image_path) }}" 
+                <img src="{{ asset('uploads/' . $certificateTemplate->image_path) }}" 
                      alt="{{ $certificateTemplate->name }}" 
                      class="mt-2 h-40 w-auto object-contain">
             </div>
@@ -89,7 +89,7 @@
             <div x-data="templateEditor({{ json_encode($certificateTemplate->layout_config) }})" class="border rounded-lg p-4">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">レイアウト設定</h3>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-8">
                     <!-- プレビュー領域 -->
                     <div class="overflow-auto p-4 bg-gray-50 rounded-lg" style="max-height: 800px;">
                         <div class="relative border rounded-lg overflow-hidden bg-gray-100 mx-auto" 
@@ -100,7 +100,7 @@
                                  transformOrigin: 'top center',
                                  margin: '0 auto'
                              }">
-                            <img :src="previewImage || '{{ Storage::url($certificateTemplate->image_path) }}'" 
+                            <img :src="previewImage || '{{ asset('uploads/' . $certificateTemplate->image_path) }}'" 
                                  alt="テンプレートプレビュー" 
                                  class="w-full h-full object-contain">
                             

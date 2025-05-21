@@ -45,7 +45,7 @@ class CertificateTemplateController extends Controller
             \Log::info('バリデーション成功', ['validated' => $validated]);
 
             // 画像の保存
-            $imagePath = $request->file('template_image')->store('certificate-templates', 'public');
+            $imagePath = $request->file('template_image')->store('certificate-templates', 'uploads');
             \Log::info('画像保存成功', ['imagePath' => $imagePath]);
 
             // テンプレートの作成
@@ -107,9 +107,11 @@ class CertificateTemplateController extends Controller
         // 新しい画像がアップロードされた場合
         if ($request->hasFile('template_image')) {
             // 古い画像を削除
-            Storage::disk('public')->delete($certificateTemplate->image_path);
+            if (file_exists(public_path('uploads/' . $certificateTemplate->image_path))) {
+                unlink(public_path('uploads/' . $certificateTemplate->image_path));
+            }
             // 新しい画像を保存
-            $imagePath = $request->file('template_image')->store('certificate-templates', 'public');
+            $imagePath = $request->file('template_image')->store('certificate-templates', 'uploads');
             $validated['image_path'] = $imagePath;
         }
 
@@ -132,7 +134,9 @@ class CertificateTemplateController extends Controller
     public function destroy(CertificateTemplate $certificateTemplate)
     {
         // 画像の削除
-        Storage::disk('public')->delete($certificateTemplate->image_path);
+        if (file_exists(public_path('uploads/' . $certificateTemplate->image_path))) {
+            unlink(public_path('uploads/' . $certificateTemplate->image_path));
+        }
         
         // テンプレートの削除
         $certificateTemplate->delete();

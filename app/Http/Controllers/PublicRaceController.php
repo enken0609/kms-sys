@@ -73,7 +73,7 @@ class PublicRaceController extends Controller
         ];
 
         // テンプレート画像の取得
-        $image_path = Storage::disk('public')->path($template->image_path);
+        $image_path = public_path('uploads/' . $template->image_path);
         $image_data = base64_encode(file_get_contents($image_path));
 
         // レイアウト設定の取得
