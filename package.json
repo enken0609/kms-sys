@@ -19,6 +19,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "alpinejs": "^3.14.9",
         "jquery": "^3.7.1"
     },
     "name": "kms-sys",

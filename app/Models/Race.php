@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\CertificateTemplate;
 
 class Race extends Model
 {
@@ -15,6 +16,7 @@ class Race extends Model
         'date',
         'description',
         'series',
+        'certificate_template_id'
     ];
 
     protected $casts = [
@@ -40,5 +42,13 @@ class Race extends Model
     public function getSeriesNameAttribute()
     {
         return self::SERIES_OPTIONS[$this->series] ?? $this->series;
+    }
+
+    /**
+     * このレースで使用する記録証テンプレート
+     */
+    public function certificateTemplate()
+    {
+        return $this->belongsTo(CertificateTemplate::class);
     }
 }

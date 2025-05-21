@@ -56,58 +56,45 @@ class PublicRaceController extends Controller
 
     public function downloadCertificate(Race $race, Result $result)
     {
-        // 完走証のPDF生成とダウンロード処理
+        // レースに紐づくテンプレートを取得
+        $template = $race->certificateTemplate;
+        if (!$template) {
+            return back()->with('error', '記録証テンプレートが設定されていません。');
+        }
+
+        // 完走証のデータ準備
         $data = [
-            'bib' => $result->bib,
-            'category' => $result->category->name,
-            'name' => $result->name,
-            'team_name' => $result->team_name,
-            'time' => $result->time,
-            'team_time' => $result->team_time,
-            'place' => $result->place,
-            'team_place' => $result->team_place,
+            'bib_number' => $result->bib,
+            'category_name' => $result->category->name,
+            'participant_name' => $result->name,
+            'finish_time' => $result->time,
+            'overall_rank' => $result->place,
+            'category_rank' => $result->category_place ?? $result->place,
         ];
 
-        $image_path = null;
-        $series = $race->series;
-        if ($series == 'skyvalley') {
-            $image_path = public_path('img/skyvalley_certificate_template.png');
-        } elseif ($series == 'mountainmarathon') {
-            $image_path = public_path('img/mountain_marathon_certificate_template.png');
-        } elseif ($series == 'shirane') {
-            $image_path = public_path('img/shirane_certificate_template.png');
-        }
-
+        // テンプレート画像の取得
+        $image_path = Storage::disk('public')->path($template->image_path);
         $image_data = base64_encode(file_get_contents($image_path));
 
-        if ($series == 'skyvalley') {
-            $pdf = PDF::loadView('public.races.certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
-        }elseif ($series == 'mountainmarathon') {
-            $pdf = PDF::loadView('public.races.certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
-        } elseif ($series == 'shirane') {
-            $is_team_race = $result->category->is_team_race;
-            if ($is_team_race == 1) {
-                $pdf = PDF::loadView('public.races.shirane_team_certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
-            } else {
-                $pdf = PDF::loadView('public.races.shirane_certificate', compact('data', 'image_data'))->setPaper('b5', 'portrait');
-            }
-        }
+        // レイアウト設定の取得
+        $layout_config = $template->layout_config;
 
-        return $pdf->setPaper('b5')->download('certificate.pdf');
-        // $pdf->download('certificate.pdf');
+        // PDFの生成
+        $pdf = PDF::loadView('public.races.certificate', [
+            'data' => $data,
+            'image_data' => $image_data,
+            'layout_config' => $layout_config,
+            'template' => $template,
+        ])->setPaper(strtolower($template->paper_size), $template->orientation);
 
-        // $pdf = PDF::loadView('public.races.certificate', $data)
-        //     ->setPaper('b5', 'portrait') // 用紙サイズと向きを設定
-        //     ->setOptions([
-        //         'isHtml5ParserEnabled' => true,
-        //         'isRemoteEnabled' => true,
-        //     ]);
+        // ファイル名の設定
+        $filename = sprintf(
+            '%s_%s_%s.pdf',
+            $race->name,
+            $result->name,
+            now()->format('Ymd_His')
+        );
 
-        // $pdf = PDF::loadView('public.races.certificate', $data);
-
-        // return $pdf->stream('certificate.pdf');
-
-        // return view('public.races.certificate', compact('data'));
-
+        return $pdf->download($filename);
     }
 }
