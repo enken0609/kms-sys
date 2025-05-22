@@ -18,3 +18,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Mac OS
+.DS_Store
+**/.DS_Store
+
+# Uploaded files
+public/uploads/
+public/uploads/*

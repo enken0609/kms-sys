@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Race;
 use Illuminate\Support\Facades\Storage;
+use App\Models\CertificateTemplate;
 
 class RaceController extends Controller
 {
@@ -18,7 +19,8 @@ class RaceController extends Controller
     public function create()
     {
         $seriesOptions = Race::SERIES_OPTIONS;
-        return view('admin.races.create', compact('seriesOptions'));
+        $certificateTemplates = CertificateTemplate::orderBy('name')->get();
+        return view('admin.races.create', compact('seriesOptions', 'certificateTemplates'));
     }
 
     public function store(Request $request)
@@ -28,6 +30,7 @@ class RaceController extends Controller
             'date' => 'required|date',
             'description' => 'nullable|string|max:1000',
             'series' => 'required|string|in:' . implode(',', array_keys(Race::SERIES_OPTIONS)),
+            'certificate_template_id' => 'nullable|exists:certificate_templates,id',
         ]);
 
         Race::create($validated);
@@ -39,7 +42,8 @@ class RaceController extends Controller
     public function edit(Race $race)
     {
         $seriesOptions = Race::SERIES_OPTIONS;
-        return view('admin.races.edit', compact('race', 'seriesOptions'));
+        $certificateTemplates = CertificateTemplate::orderBy('name')->get();
+        return view('admin.races.edit', compact('race', 'seriesOptions', 'certificateTemplates'));
     }
 
     public function update(Request $request, Race $race)
@@ -49,6 +53,7 @@ class RaceController extends Controller
             'date' => 'required|date',
             'description' => 'nullable|string|max:1000',
             'series' => 'required|string|in:' . implode(',', array_keys(Race::SERIES_OPTIONS)),
+            'certificate_template_id' => 'nullable|exists:certificate_templates,id',
         ]);
 
         $race->update($validated);
