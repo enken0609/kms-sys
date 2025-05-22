@@ -9,4 +9,12 @@ export default {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    'fas',
+    'far',
+    'fab',
+    {
+      pattern: /fa-.+/,
+    }
+  ]
 } 

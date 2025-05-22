@@ -17,11 +17,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link href="../../css/public.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @stack('scripts')
 
-  <!-- Styles -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <style>
     :root {
       --primary-color: #2563eb;
@@ -114,14 +112,6 @@
       }
     }
   </style>
-
-  <!-- Scripts -->
-  <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/public.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-  <script src="{{ asset('js/app.js') }}" defer></script>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 
 <body class="min-h-screen">
@@ -149,13 +139,6 @@
       </div>
     </footer>
   </div>
-
-  <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

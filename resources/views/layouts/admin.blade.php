@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMS - 管理画面</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('scripts')
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen">
@@ -25,6 +26,10 @@
                 <a href="{{ route('admin.categories.index') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
                     <i class="fas fa-tags mr-3"></i>
                     カテゴリー管理
+                </a>
+                <a href="{{ route('admin.certificate-templates.index') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
+                    <i class="fas fa-certificate mr-3"></i>
+                    記録証テンプレート
                 </a>
                 <form method="POST" action="{{ route('admin.logout') }}" class="mt-6">
                     @csrf

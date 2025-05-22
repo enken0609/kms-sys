@@ -18,6 +18,15 @@
             </div>
 
             <div class="mb-4">
+                <label for="date" class="block text-sm font-medium text-gray-700">開催日</label>
+                <input type="date" name="date" id="date" value="{{ old('date', $race->date->format('Y-m-d')) }}" 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                @error('date')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="series" class="block text-sm font-medium text-gray-700">シリーズ</label>
                 <select name="series" id="series" 
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -34,17 +43,24 @@
             </div>
 
             <div class="mb-4">
-                <label for="date" class="block text-sm font-medium text-gray-700">開催日</label>
-                <input type="date" name="date" id="date" value="{{ old('date', $race->date->format('Y-m-d')) }}"
+                <label for="certificate_template_id" class="block text-sm font-medium text-gray-700">記録証テンプレート</label>
+                <select name="certificate_template_id" id="certificate_template_id" 
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                @error('date')
+                    <option value="">選択してください</option>
+                    @foreach($certificateTemplates as $template)
+                        <option value="{{ $template->id }}" {{ old('certificate_template_id', $race->certificate_template_id) == $template->id ? 'selected' : '' }}>
+                            {{ $template->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('certificate_template_id')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="mb-4">
                 <label for="description" class="block text-sm font-medium text-gray-700">説明</label>
-                <textarea name="description" id="description" rows="4"
+                <textarea name="description" id="description" rows="3" 
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('description', $race->description) }}</textarea>
                 @error('description')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
