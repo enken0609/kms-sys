@@ -8,13 +8,36 @@
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^6.5.2",
         "@popperjs/core": "^2.11.6",
+        "@vitejs/plugin-vue": "^5.0.0",
+        "autoprefixer": "^10.4.17",
         "axios": "^1.6.4",
         "bootstrap": "^5.2.3",
-        "laravel-vite-plugin": "^1.0",
+        "laravel-vite-plugin": "^1.0.0",
+        "postcss": "^8.4.35",
         "sass": "^1.56.1",
-        "vite": "^5.0"
+        "tailwindcss": "^3.4.1",
+        "vite": "^5.0.0"
     },
     "dependencies": {
+        "alpinejs": "^3.14.9",
         "jquery": "^3.7.1"
-    }
+    },
+    "name": "kms-sys",
+    "version": "1.0.0",
+    "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+    "main": "vite.config_.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/enken0609/kms-sys.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/enken0609/kms-sys/issues"
+    },
+    "homepage": "https://github.com/enken0609/kms-sys#readme"
 }
