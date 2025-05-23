@@ -13,21 +13,20 @@ export default defineConfig({
     ],
     server: {
         host: '0.0.0.0',
+        port: 5174,
         hmr: {
             host: 'localhost',
+            port: 5174
         },
-        watch: {
-            usePolling: true,
-        },
-        port: 5173,
     },
     build: {
+        outDir: 'public/build',       // Laravel が探す場所
+        manifest: true,               // Laravel の @vite が必要とする
         rollupOptions: {
-            output: {
-                manualChunks: {
-                    'fontawesome': ['@fortawesome/fontawesome-free']
-                }
-            }
-        }
-    }
-}); 
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+        },
+    },
+});
