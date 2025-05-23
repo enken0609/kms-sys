@@ -38,7 +38,36 @@
 
         <!-- リザルトインポートフォーム -->
         <div class="mt-8 border-t pt-6">
-            <h3 class="text-lg font-semibold mb-4">リザルトのインポート</h3>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">リザルトのインポート</h3>
+                <a href="{{ route('admin.categories.csv-sample', $category) }}" 
+                   class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    CSVサンプルをダウンロード
+                </a>
+            </div>
+            
+            <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                <h4 class="text-sm font-medium text-blue-800 mb-2">📋 CSVフォーマット説明</h4>
+                <p class="text-sm text-blue-700 mb-2">以下の列順でCSVファイルを作成してください：</p>
+                <div class="text-xs text-blue-600 grid grid-cols-3 gap-2">
+                    <span>1. 総合順位</span>
+                    <span>2. ゼッケン番号</span>
+                    <span>3. 氏名</span>
+                    <span>4. 性別</span>
+                    <span>5. タイム</span>
+                    <span>6. 年代別順位</span>
+                    <span>7. チーム名 <small>(任意)</small></span>
+                    <span>8. チーム順位 <small>(任意)</small></span>
+                    <span>9. チームタイム <small>(任意)</small></span>
+                </div>
+                <p class="text-xs text-blue-600 mt-2">
+                    <strong>注意:</strong> ファイルはUTF-8またはShift_JISエンコーディングで保存してください。
+                </p>
+            </div>
+
             <form action="{{ route('admin.categories.import', $category) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 

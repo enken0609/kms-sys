@@ -28,6 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // カテゴリー管理
         Route::resource('categories', CategoryController::class);
         Route::post('categories/{category}/import', [CategoryController::class, 'import'])->name('categories.import');
+        Route::get('categories/{category}/csv-sample', [CategoryController::class, 'downloadCsvSample'])->name('categories.csv-sample');
 
         // 記録証テンプレート管理
         Route::resource('certificate-templates', CertificateTemplateController::class);

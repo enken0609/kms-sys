@@ -18,7 +18,7 @@
 
     @foreach($results as $block_id => $blockResults)
     <div class="mb-8 bg-white">
-        <div class="">
+        <div class="p-2">
             @if($blockResults->first()->block)
             <h3 class="text-base font-semibold text-gray-800 mb-3">{{ $blockResults->first()->block->name }}</h3>
             @else
