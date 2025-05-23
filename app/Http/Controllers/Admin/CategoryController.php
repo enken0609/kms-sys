@@ -138,6 +138,45 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * 個別リザルト削除
+     */
+    public function deleteResult(Category $category, Result $result)
+    {
+        // 削除対象のリザルトがこのカテゴリーに属しているかチェック
+        if ($result->category_id !== $category->id) {
+            return redirect()
+                ->route('admin.categories.show', $category)
+                ->with('error', '削除対象のリザルトが見つかりません。');
+        }
+
+        $result->delete();
+
+        return redirect()
+            ->route('admin.categories.show', $category)
+            ->with('success', 'リザルトを削除しました。');
+    }
+
+    /**
+     * 一括リザルト削除
+     */
+    public function bulkDeleteResults(Request $request, Category $category)
+    {
+        $request->validate([
+            'result_ids' => 'required|array',
+            'result_ids.*' => 'exists:results,id',
+        ]);
+
+        // このカテゴリーに属するリザルトのみを削除
+        $deletedCount = Result::where('category_id', $category->id)
+            ->whereIn('id', $request->result_ids)
+            ->delete();
+
+        return redirect()
+            ->route('admin.categories.show', $category)
+            ->with('success', "{$deletedCount}件のリザルトを削除しました。");
+    }
+
     public function import(Request $request, Category $category)
     {
         $request->validate([

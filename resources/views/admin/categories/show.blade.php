@@ -111,11 +111,33 @@
         <!-- インポート済みリザルト一覧 -->
         @if($results->count() > 0)
             <div class="mt-8 border-t pt-6">
-                <h3 class="text-lg font-semibold mb-4">インポート済みリザルト</h3>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">インポート済みリザルト ({{ $results->count() }}件)</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="selectAll()" class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                            全選択
+                        </button>
+                        <button onclick="deselectAll()" class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                            選択解除
+                        </button>
+                        <button onclick="bulkDelete()" class="text-sm px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" disabled id="bulkDeleteBtn">
+                            選択削除
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="bulkDeleteForm" action="{{ route('admin.categories.results.bulk-delete', $category) }}" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
+                                    <input type="checkbox" id="selectAllCheckbox" onchange="toggleAll(this)" class="rounded">
+                                </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ブロック</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">順位</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ビブ番号</th>
@@ -124,11 +146,15 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">タイム</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">年代別順位</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">チーム名</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">操作</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($results as $result)
                                 <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" name="result_checkbox" value="{{ $result->id }}" onchange="updateBulkDeleteButton()" class="rounded">
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->block->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->place }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->bib }}</td>
@@ -145,12 +171,81 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->time }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->age_place }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $result->team_name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <form action="{{ route('admin.categories.results.delete', [$category, $result]) }}" method="POST" 
+                                              onsubmit="return confirm('このリザルトを削除しますか？')" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900 text-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <script>
+                function toggleAll(selectAllCheckbox) {
+                    const checkboxes = document.querySelectorAll('input[name="result_checkbox"]');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                    updateBulkDeleteButton();
+                }
+
+                function selectAll() {
+                    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+                    selectAllCheckbox.checked = true;
+                    toggleAll(selectAllCheckbox);
+                }
+
+                function deselectAll() {
+                    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+                    selectAllCheckbox.checked = false;
+                    toggleAll(selectAllCheckbox);
+                }
+
+                function updateBulkDeleteButton() {
+                    const checkboxes = document.querySelectorAll('input[name="result_checkbox"]:checked');
+                    const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+                    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+                    
+                    bulkDeleteBtn.disabled = checkboxes.length === 0;
+                    
+                    // 全選択チェックボックスの状態を更新
+                    const allCheckboxes = document.querySelectorAll('input[name="result_checkbox"]');
+                    selectAllCheckbox.checked = allCheckboxes.length > 0 && checkboxes.length === allCheckboxes.length;
+                }
+
+                function bulkDelete() {
+                    const checkboxes = document.querySelectorAll('input[name="result_checkbox"]:checked');
+                    if (checkboxes.length === 0) {
+                        alert('削除するリザルトを選択してください。');
+                        return;
+                    }
+
+                    if (!confirm(`選択した${checkboxes.length}件のリザルトを削除しますか？`)) {
+                        return;
+                    }
+
+                    const form = document.getElementById('bulkDeleteForm');
+                    checkboxes.forEach(checkbox => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'result_ids[]';
+                        input.value = checkbox.value;
+                        form.appendChild(input);
+                    });
+
+                    form.submit();
+                }
+            </script>
         @endif
     </div>
 @endsection 
