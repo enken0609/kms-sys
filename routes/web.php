@@ -34,8 +34,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-// 既存のルート
-Route::get('/', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('public.races.index');
+// 公開ページのルート
+Route::get('/', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('home');
 Route::get('/races', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('public.races.index');
 Route::get('/races/{race}', [App\Http\Controllers\PublicRaceController::class, 'showCategory'])->name('public.races.category');
 Route::get('/races/{race}/{category}', [App\Http\Controllers\PublicRaceController::class, 'showResult'])->name('public.races.result');
