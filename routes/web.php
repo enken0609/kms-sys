@@ -29,6 +29,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::post('categories/{category}/import', [CategoryController::class, 'import'])->name('categories.import');
         Route::get('categories/{category}/csv-sample', [CategoryController::class, 'downloadCsvSample'])->name('categories.csv-sample');
+        Route::delete('categories/{category}/results/{result}', [CategoryController::class, 'deleteResult'])->name('categories.results.delete');
+        Route::delete('categories/{category}/results', [CategoryController::class, 'bulkDeleteResults'])->name('categories.results.bulk-delete');
 
         // 記録証テンプレート管理
         Route::resource('certificate-templates', CertificateTemplateController::class);
