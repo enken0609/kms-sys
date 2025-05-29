@@ -69,7 +69,7 @@ class PublicRaceController extends Controller
             'participant_name' => $result->name,
             'finish_time' => $result->time,
             'overall_rank' => $result->place,
-            'category_rank' => $result->category_place ?? $result->place,
+            'category_rank' => $result->age_place ?? $result->place,
         ];
 
         // テンプレート画像の取得
