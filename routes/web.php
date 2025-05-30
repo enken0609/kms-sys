@@ -43,3 +43,10 @@ Route::get('/races', [App\Http\Controllers\PublicRaceController::class, 'index']
 Route::get('/races/{race}', [App\Http\Controllers\PublicRaceController::class, 'showCategory'])->name('public.races.category');
 Route::get('/races/{race}/{category}', [App\Http\Controllers\PublicRaceController::class, 'showResult'])->name('public.races.result');
 Route::get('/races/{race}/download/{result}', [App\Http\Controllers\PublicRaceController::class, 'downloadCertificate'])->name('public.races.download');
+
+Route::prefix('races')->name('public.races.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('index');
+    Route::get('/{race}/categories', [App\Http\Controllers\PublicRaceController::class, 'showCategory'])->name('category');
+    Route::get('/{race}/categories/{category}', [App\Http\Controllers\PublicRaceController::class, 'showResult'])->name('result');
+    Route::get('/{race}/results/{result}/download', [App\Http\Controllers\PublicRaceController::class, 'downloadCertificate'])->name('download-certificate');
+});
