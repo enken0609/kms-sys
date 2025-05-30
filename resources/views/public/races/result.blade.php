@@ -66,7 +66,6 @@
     <x-loading-spinner id="certificate-loading" />
 </div>
 
-{{-- JavaScriptを追加 --}}
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dateStr = `${year}${month}${day}`;
 
             // 選手名の取得
-            const participantName = this.closest('tr').querySelector('td:nth-child(3)').textContent.trim();
+            const participantName = this.dataset.participantName;
             
             // ローディングスピナーを表示
             loadingSpinner.classList.remove('hidden');

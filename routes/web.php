@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CertificateTemplateController;
+use App\Http\Controllers\PublicRaceController;
 
 // 管理画面のルート
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -38,15 +39,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // 公開ページのルート
-Route::get('/', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('home');
-Route::get('/races', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('public.races.index');
-Route::get('/races/{race}', [App\Http\Controllers\PublicRaceController::class, 'showCategory'])->name('public.races.category');
-Route::get('/races/{race}/{category}', [App\Http\Controllers\PublicRaceController::class, 'showResult'])->name('public.races.result');
-Route::get('/races/{race}/download/{result}', [App\Http\Controllers\PublicRaceController::class, 'downloadCertificate'])->name('public.races.download');
+Route::get('/', [PublicRaceController::class, 'index'])->name('home');
 
-Route::prefix('races')->name('public.races.')->group(function () {
-    Route::get('/', [App\Http\Controllers\PublicRaceController::class, 'index'])->name('index');
-    Route::get('/{race}/categories', [App\Http\Controllers\PublicRaceController::class, 'showCategory'])->name('category');
-    Route::get('/{race}/categories/{category}', [App\Http\Controllers\PublicRaceController::class, 'showResult'])->name('result');
-    Route::get('/{race}/results/{result}/download', [App\Http\Controllers\PublicRaceController::class, 'downloadCertificate'])->name('download-certificate');
+Route::name('public.races.')->group(function () {
+    Route::get('/races', [PublicRaceController::class, 'index'])->name('index');
+    Route::get('/races/{race}/categories', [PublicRaceController::class, 'showCategory'])->name('category');
+    Route::get('/races/{race}/categories/{category}', [PublicRaceController::class, 'showResult'])->name('result');
+    Route::get('/races/{race}/results/{result}/download', [PublicRaceController::class, 'downloadCertificate'])->name('download-certificate');
 });
