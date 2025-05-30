@@ -3,9 +3,6 @@
 ## 概要
 Katashina Mountains Series（片品山岳シリーズ）のスカイランニングレースで使用するWEB記録証をダウンロードできるシステムです。選手は自身のレース記録をPDF形式でダウンロードすることができます。
 
-## サイトURL
-https://result.katashina-mountains.com/
-
 ## 主な機能
 - レース記録証のPDFダウンロード
 - レース結果の管理
