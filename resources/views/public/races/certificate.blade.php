@@ -7,7 +7,7 @@
   <title>記録証</title>
   <style>
   @page {
-    size: {{ $template->paper_size }};
+    size: {{ strtolower($template->paper_size) }} {{ $template->orientation }};
     margin: 0;
   }
 
@@ -39,21 +39,27 @@
     src: url('{{ storage_path("fonts/NotoSansJP-Bold.ttf") }}');
   }
 
-  html,
   body {
     font-family: 'Noto Sans JP', sans-serif;
-    width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .template-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
   }
 
   .template-image {
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
   }
 
@@ -61,23 +67,26 @@
     position: absolute;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: bold;
+    white-space: nowrap;
   }
   </style>
 </head>
 
 <body>
-  <img src="data:image/png;base64,{{ $image_data }}" class="template-image">
+  <div class="template-container">
+    <img src="data:image/jpeg;base64,{{ $image_data }}" class="template-image">
 
-  @foreach($layout_config['elements'] as $key => $element)
-    <div class="certificate-element" style="
-      left: {{ $element['x'] }}px;
-      top: {{ $element['y'] }}px;
-      font-size: {{ $element['font_size'] }}px;
-      color: {{ $element['color'] }};
-    ">
-      {{ $data[$key] ?? '' }}
-    </div>
-  @endforeach
+    @foreach($layout_config['elements'] as $key => $element)
+      <div class="certificate-element" style="
+        left: {{ $element['x'] }}px;
+        top: {{ $element['y'] }}px;
+        font-size: {{ $element['font_size'] }}px;
+        color: {{ $element['color'] }};
+      ">
+        {{ $data[$key] ?? '' }}
+      </div>
+    @endforeach
+  </div>
 </body>
 
 </html>

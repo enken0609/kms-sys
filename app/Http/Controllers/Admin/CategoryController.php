@@ -89,6 +89,94 @@ class CategoryController extends Controller
         return view('admin.categories.show', compact('category', 'blocks', 'results'));
     }
 
+    /**
+     * CSVインポート用のサンプルファイルをダウンロード
+     */
+    public function downloadCsvSample(Category $category)
+    {
+        $filename = 'result_import_sample_' . str_replace(' ', '_', $category->name) . '.csv';
+        
+        // CSVヘッダー
+        $headers = [
+            'place',
+            'bib',
+            'name',
+            'gender',
+            'time',
+            'age_place',
+            'team_name',
+            'team_place',
+            'team_time'
+        ];
+        
+        // サンプルデータ
+        $sampleData = [
+            ['1', '101', '山田太郎', 'male', '00:25:30', '1', '', '', ''],
+            ['2', '102', '佐藤次郎', 'male', '00:26:15', '1', '', '', ''],
+        ];
+        
+        $callback = function() use ($headers, $sampleData) {
+            $file = fopen('php://output', 'w');
+            
+            // BOM付きUTF-8で出力（Excel対応）
+            fputs($file, "\xEF\xBB\xBF");
+            
+            // ヘッダー行を出力
+            fputcsv($file, $headers);
+            
+            // サンプルデータを出力
+            foreach ($sampleData as $row) {
+                fputcsv($file, $row);
+            }
+            
+            fclose($file);
+        };
+        
+        return response()->stream($callback, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+    }
+
+    /**
+     * 個別リザルト削除
+     */
+    public function deleteResult(Category $category, Result $result)
+    {
+        // 削除対象のリザルトがこのカテゴリーに属しているかチェック
+        if ($result->category_id !== $category->id) {
+            return redirect()
+                ->route('admin.categories.show', $category)
+                ->with('error', '削除対象のリザルトが見つかりません。');
+        }
+
+        $result->delete();
+
+        return redirect()
+            ->route('admin.categories.show', $category)
+            ->with('success', 'リザルトを削除しました。');
+    }
+
+    /**
+     * 一括リザルト削除
+     */
+    public function bulkDeleteResults(Request $request, Category $category)
+    {
+        $request->validate([
+            'result_ids' => 'required|array',
+            'result_ids.*' => 'exists:results,id',
+        ]);
+
+        // このカテゴリーに属するリザルトのみを削除
+        $deletedCount = Result::where('category_id', $category->id)
+            ->whereIn('id', $request->result_ids)
+            ->delete();
+
+        return redirect()
+            ->route('admin.categories.show', $category)
+            ->with('success', "{$deletedCount}件のリザルトを削除しました。");
+    }
+
     public function import(Request $request, Category $category)
     {
         $request->validate([
